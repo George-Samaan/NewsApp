@@ -1,11 +1,11 @@
-package com.route.newsapp.api.model.sourcesResponse
+package com.route.data.api.model.sourcesResponse
 
 import com.google.gson.annotations.SerializedName
 
 data class SourcesResponse(
 
     @field:SerializedName("sources")
-    val sources: List<Source?>? = null,
+    val sources: List<SourceDto?>? = null,
 
     @field:SerializedName("status")
     val status: String? = null,

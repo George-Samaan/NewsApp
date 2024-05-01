@@ -3,37 +3,28 @@ package com.route.newsapp.newsSources
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
+import com.route.domain.contracts.repository.newsSource.NewsSourceRepository
+import com.route.domain.model.Source
 import com.route.newsapp.ViewMessage
-import com.route.newsapp.api.ApiManger
-import com.route.newsapp.api.model.sourcesResponse.Source
-import com.route.newsapp.api.model.sourcesResponse.SourcesResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
+import javax.inject.Inject
 
-class SourcesViewModel : ViewModel() {
+@HiltViewModel
+class SourcesViewModel @Inject constructor(private val sourcesRepository: NewsSourceRepository) :
+    ViewModel() {
     val isLoadingVisible = MutableLiveData<Boolean>()
     val message = MutableLiveData<ViewMessage>()
     val sourcesLiveData = MutableLiveData<List<Source?>?>()
+
 
     fun getNewsSources() {
         isLoadingVisible.value = true
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = ApiManger.getServices().getNewsSources()
-                sourcesLiveData.postValue(response.sources)
-            } catch (ex: HttpException) {
-                val responseJson = ex.response()?.errorBody()?.string()
-                val errorResponse = Gson().fromJson(
-                    responseJson,
-                    SourcesResponse::class.java
-                )
-                message.postValue(
-                    ViewMessage(
-                        message = errorResponse.message ?: "Something Went Wrong"
-                    )
-                )
+                val sources = sourcesRepository.getSources()
+                sourcesLiveData.postValue(sources)
             } catch (ex: Exception) {
                 message.postValue(
                     ViewMessage(

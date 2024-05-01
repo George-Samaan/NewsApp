@@ -1,4 +1,4 @@
-package com.route.newsapp.api.model.newsResponse
+package com.route.data.api.model.newsResponse
 
 import com.google.gson.annotations.SerializedName
 
@@ -8,7 +8,7 @@ data class NewsResponse(
     val totalResults: Int? = null,
 
     @field:SerializedName("articles")
-    val articles: List<Article?>? = null,
+    val articles: List<ArticleDto?>? = null,
 
     @field:SerializedName("status")
     val status: String? = null,

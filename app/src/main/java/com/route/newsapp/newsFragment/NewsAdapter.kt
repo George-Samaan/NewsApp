@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.route.newsapp.api.model.newsResponse.Article
+import com.route.domain.model.Article
 import com.route.newsapp.databinding.ItemNewsBinding
 
 class NewsAdapter(var newsList: List<Article?>?) : Adapter<NewsAdapter.NewsViewHolder>() {

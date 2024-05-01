@@ -6,28 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayout
+import com.route.domain.model.Source
 import com.route.newsapp.R
 import com.route.newsapp.ViewMessage
-import com.route.newsapp.api.model.sourcesResponse.Source
 import com.route.newsapp.databinding.FragmentNewsSourcesBinding
 import com.route.newsapp.newsFragment.NewsFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewsSourcesFragment : Fragment() {
 
-    lateinit var viewBiniding: FragmentNewsSourcesBinding
-    lateinit var viewModel: SourcesViewModel
+    private lateinit var viewBiniding: FragmentNewsSourcesBinding
+    private val viewModel: SourcesViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[SourcesViewModel::class.java]
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        viewModel = ViewModelProvider(this)[SourcesViewModel::class.java]
+//    }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         viewBiniding = FragmentNewsSourcesBinding.inflate(inflater, container, false)
         return viewBiniding.root
@@ -55,9 +55,7 @@ class NewsSourcesFragment : Fragment() {
     val newsFragment = NewsFragment()
 
     private fun initViews() {
-        childFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_contanier, newsFragment)
+        childFragmentManager.beginTransaction().replace(R.id.fragment_contanier, newsFragment)
             .commit()
 
     }
@@ -76,8 +74,7 @@ class NewsSourcesFragment : Fragment() {
             tab.tag = source
             viewBiniding.tabLayout.addTab(tab)
         }
-        viewBiniding.tabLayout.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
+        viewBiniding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val source = tab?.tag as Source
                 newsFragment.changeSource(source)

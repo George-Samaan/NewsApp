@@ -6,21 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import com.route.domain.model.Article
+import com.route.domain.model.Source
 import com.route.newsapp.ViewMessage
-import com.route.newsapp.api.model.newsResponse.Article
-import com.route.newsapp.api.model.sourcesResponse.Source
 import com.route.newsapp.databinding.FragmentNewsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewsFragment : Fragment() {
 
-    lateinit var viewBinding: FragmentNewsBinding
-    lateinit var viewModel: NewsViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[NewsViewModel::class.java]
-    }
+    private lateinit var viewBinding: FragmentNewsBinding
+    private val viewModel: NewsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
